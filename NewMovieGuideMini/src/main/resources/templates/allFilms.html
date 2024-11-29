@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Стартовая страница</title>
+</head>
+<body style="background-color:#ffebcd">
+<em><h1 style="text-align:center"><strong>Справочник фильмов</strong></h1></em>
+<h4>Применить фильтр:</h4>
+<p th:each="type : ${types}">
+    <a th:href="@{/type/{type}}" th:text="${type}"></a>
+</p>
+<table style="width:1000px">
+    <tr>
+        <td colspan="3" style="text-align:center">
+            <em>************************************************** </em>
+        </td>
+    </tr>
+    <tr th:each="line : ${lines}">
+        <td>
+            <img th:src="@{${line.img}}" width="200" >
+        </td>
+        <td>
+            <h3>"<a th:href="@{/line/{id}(id=${line.id})}"
+                    th:text="${line.name}"></a>"
+            </h3>
+            <h4><span th:text="${line.type}"></span></h4>
+        </td>
+        <td>
+                <span>
+                    <h4>
+                        <a th:href="@{'/add?id='+${line.id}}"> Буду смотреть!</a>
+                    </h4>
+                </span>
+        </td>
+    </tr>
+</table>
+<br>
+<p> <span th:if="${lines == null}"></span></p>
+<form action="/toView" ><button margin="center">К списку добавленный фильмов</button></form>
+</body>
+</html>
