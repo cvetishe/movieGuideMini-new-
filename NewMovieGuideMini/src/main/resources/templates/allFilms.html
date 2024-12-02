@@ -5,38 +5,60 @@
     <title>Стартовая страница</title>
 </head>
 <body style="background-color:#ffebcd">
-<em><h1 style="text-align:center"><strong>Справочник фильмов</strong></h1></em>
-<h4>Применить фильтр:</h4>
-<p th:each="type : ${types}">
-    <a th:href="@{/type/{type}}" th:text="${type}"></a>
-</p>
-<table style="width:1000px">
+<table style="width:1200px">
+    <tr>
+        <td colspan="2" style="text-align:center">
+            <em><h1 style="text-align:center"><strong>Справочник фильмов</strong></h1></em>
+            <p> ************************************************** </p>
+        </td>
+        <td>
+            <form action="/addMovie">
+                <em>
+                    Какой фильм вы хотели бы видеть в нашем справочнике?
+                </em>
+                    <input name="movie" checked="checked">
+                <br>
+                <br>
+                <input type="submit" value="ответить">
+            </form>
+        </td>
+    </tr>
     <tr>
         <td colspan="3" style="text-align:center">
-            <em>************************************************** </em>
+            <h4>Применить фильтр:</h4>
+        </td>
+    </tr>
+    <tr th:each="type : ${type}">
+        <td colspan="3" style="text-align:center">
+            <a th:href="@{/type/{type}(type=${type})}" th:text="${type}"></a>
+            <br>
         </td>
     </tr>
     <tr th:each="line : ${lines}">
         <td>
-            <img th:src="@{${line.img}}" width="200" >
+            <img th:src="@{${line.img}}" width="500" >
         </td>
         <td>
-            <h3>"<a th:href="@{/line/{id}(id=${line.id})}"
+            <p>************************************************** </p>
+            <h2 style="text-align:center">"<a th:href="@{/line/{id}(id=${line.id})}"
                     th:text="${line.name}"></a>"
-            </h3>
+            </h2>
+            <p>************************************************** </p>
             <h4><span th:text="${line.type}"></span></h4>
         </td>
         <td>
-                <span>
-                    <h4>
-                        <a th:href="@{'/add?id='+${line.id}}"> Буду смотреть!</a>
-                    </h4>
-                </span>
+            <span>
+                <h4 style="text-align:center">
+                    <a th:href="@{'/add?id='+${line.id}}"> Буду смотреть!</a>
+                </h4>
+            </span>
         </td>
     </tr>
 </table>
 <br>
 <p> <span th:if="${lines == null}"></span></p>
-<form action="/toView" ><button margin="center">К списку добавленный фильмов</button></form>
+<form action="/toView"  style="text-align:center">
+    <button >К списку добавленных фильмов</button>
+</form>
 </body>
 </html>

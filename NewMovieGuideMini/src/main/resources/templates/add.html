@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Добавление фильмов в список</title>
 </head>
-<body>
-
+<body style="background-color:#ffebcd">
+<h2><em>Фильм добавлен к просмотру: </em></h2>
+<h1>"<em><span th:text="${line.name}"></span></em>"</h1>
+<br>
+<h2> Приятного просмотра!</h2>
+<form action="/toView" >
+    <h3 style="text-align:center"> <button margin="center">К списку добавленных фильмов</button></h3>
+</form>
+<br>
+<h4 style="text-align:center"> <a href="/allFilms"> На главную </a></h4>
 </body>
 </html>

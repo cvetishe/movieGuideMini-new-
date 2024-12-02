@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Полное описание фильма</title>
 </head>
-<body>
-
+<body style="background-color:#ffebcd">
+<u><h4>Описание фильма</h4></u>
+<div>
+    <h1>"<span th:text="${line.name}"></span>"</h1>
+    <h4><span th:text="${line.type}"></span></h4>
+    <span th:if="${line.description != 0}"></span>
+    <h3> <span th:text="${line.description}"></span></h3>
+    <p th:if="${line.img != 0}" ></p>
+    <img th:src="@{${line.img}}" width="1000" height="auto">
+    <span>
+        <u><h3 style="text-align:center">
+            <a th:href="@{'/add?id='+${line.id}}"> Буду смотреть!</a>
+        </h3></u>
+    </span>
+</div>
+<br>
+<form action="/toView" ><button margin="center">К списку добавленный фильмов</button></form>
+<br>
+<h4> <a href="/allFilms"> На главную </a></h4>
 </body>
 </html>

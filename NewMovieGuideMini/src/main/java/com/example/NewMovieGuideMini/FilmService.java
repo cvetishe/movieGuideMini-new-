@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +15,14 @@ public class FilmService {
     List<Film> filmList = new ArrayList<>();
     List<String> toViewsList = new ArrayList<>();
 
-    public List<Film> fileRead(String file) throws IOException {
+
+    public List<Film> getFilmList() throws IOException {
+        filmList.clear();
+        fileRead("films_data.txt");
+        return filmList;
+    }
+
+    public void fileRead(String file) throws IOException {
         try {
             Scanner read = new Scanner(new File(file));
             int id = 0;
@@ -26,7 +32,7 @@ public class FilmService {
             while (read.hasNext()) {
                 String line = read.nextLine();
                 name = line.substring(0, line.indexOf("%"));
-                type = line.substring(line.indexOf("%") + 1, line.lastIndexOf("%"));
+                type = line.substring(line.indexOf("%") + 1, line.lastIndexOf("%")).trim();
                 description = line.substring(line.lastIndexOf("%") + 1);
                 id++;
                 String str = Integer.toString(id);
@@ -36,31 +42,17 @@ public class FilmService {
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage() + "файл не загружен");
         }
-        return filmList;
     }
 
-    public List<Film> getFilmList() throws IOException {
-        filmList.clear();
-        fileRead("films_data.txt");
-        return filmList;
-    }
-
-    public List<String>getTypes(){
+    public List<String> getTypes(){
         return filmList.stream().map(Film::getType).
                 distinct().toList();
     }
 
     public List<Film> getFilmOfType(String type) throws IOException {
-        System.out.println(type);
-        List<Film> filterTypes = new ArrayList<>();
-        for (Film film : filmList) {
-            if (film.type.trim().equals(type)) {
-                System.out.println(film.type);
-                filterTypes.add(film);
-
-            }
-        }
-        return filterTypes;
+        return filmList.stream()
+                .filter(film -> film.getType().equals(type)).
+                toList();
     }
 
     public List<Film> getToViewsList() throws IOException {
@@ -69,11 +61,9 @@ public class FilmService {
             for(Film film:filmList) {
                 if(view.equals(film.name)){
                     toViewFilmList.add(film);
-
                 }
             }
-        }
-        return toViewFilmList;
+        }return toViewFilmList;
     }
 
     public Film getFilmId(int id) {
@@ -81,8 +71,7 @@ public class FilmService {
             if (film.getId() == id) {
                 return film;
             }
-        }
-        return null;
+        }return null;
     }
 
     public String addFilmId(int id) {
@@ -97,8 +86,7 @@ public class FilmService {
             if (view.equals(film.name)) {
                 return view;
             }
-        }
-        return null;
+        }return null;
     }
 
     public void deleteFilmId(int id) throws IOException {

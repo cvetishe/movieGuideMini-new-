@@ -7,7 +7,8 @@ public class Film {
     String description;
     int id;
 
-    public Film(String name, String type, String img, String description, int id) {
+    public Film(String name, String type, String img,
+                String description, int id) {
         this.name = name;
         this.type = type;
         this.img = img;
@@ -35,16 +36,8 @@ public class Film {
         return img;
     }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getId() {
@@ -55,14 +48,4 @@ public class Film {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Film{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", img='" + img + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                '}';
-    }
 }

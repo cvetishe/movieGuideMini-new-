@@ -13,12 +13,25 @@ public class FilmController {
     @Autowired
     FilmService filmService;
 
-    @GetMapping({"/","/allFilms"})
+    @Autowired
+    AccountingUserRequests userRequests;
+
+
+    @GetMapping({"/","/allFilms","/movie"})
     public String getAllFilms(Model model) throws IOException {
         model.addAttribute("lines",
                 filmService.getFilmList());
-        model.addAttribute("types",
+        model.addAttribute("type",
                 filmService.getTypes());
+        return "allFilms";
+    }
+
+    @GetMapping("/addMovie")
+    public String getREsultMovie(String movie, Model model){
+        if(!movie.isEmpty()) {
+            userRequests.addMovie(movie);
+            return "redirect:/";
+        }
         return "allFilms";
     }
 
@@ -36,7 +49,8 @@ public class FilmController {
 
     @GetMapping("/toView")
     public String getToViewAllList(Model model) throws IOException {
-        model.addAttribute("lines", filmService.getToViewsList());
+        model.addAttribute("lines",
+                filmService.getToViewsList());
         if(filmService.getToViewsList().isEmpty()){
             model.addAttribute("mistake");
         }
@@ -47,7 +61,8 @@ public class FilmController {
     public String addFilmToView(int id, Model model) {
         String l = filmService.addFilmId(id);
         if (!l.isEmpty()) {
-            model.addAttribute("line", filmService.getFilmId(id));
+            model.addAttribute("line",
+                    filmService.getFilmId(id));
             return "add";
         }
         model.addAttribute("type",
@@ -73,11 +88,34 @@ public class FilmController {
     }
 
     @GetMapping("/type/{type}")
-    public String getFilmsOfType(String type,
+    public String getFilmsOfType(@PathVariable String type,
                                  Model model) throws IOException {
-        model.addAttribute("lines",filmService.getFilmOfType(type));
-        model.addAttribute("type", filmService.getTypes());
+        filmService.getTypes();
+        model.addAttribute("type",
+                filmService.getTypes());
+        model.addAttribute("lines",
+                filmService.getFilmOfType(type));
         return "allFilms";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Model model){
+        model.addAttribute("tab_movies",
+                userRequests.desiredMoviesList);
+        return "admin";
+    }
+
+    @GetMapping("/save")
+    public String saveResult(Model model){
+        try{
+            userRequests.save();
+            model.addAttribute("massage",
+                    "сохранено");
+        } catch (IOException e){
+            model.addAttribute("massage",
+                    e.getMessage());
+        }
+        return "admin";
     }
 
 }

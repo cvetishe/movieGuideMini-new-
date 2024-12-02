@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Выбранный список фильмов для просмотра</title>
 </head>
-<body>
+<body style="background-color:#ffebcd">
+<form action="/toView">
+    <table style="width:1200px">
+        <tr>
+            <td colspan="4" style="text-align:center">
+                <u><em><h1 style="text-align:center"><strong>Добавленные к просмотру</strong></h1></em></u>
+            </td>
 
+        </tr>
+        <tr th:each="line : ${lines}">
+            <td colspan="3" style="text-align:center">
+                <p>************************************************** </p>
+                <h2>"<a th:href="@{/line/{id}(id=${line.id})}"
+                        th:text="${line.name}"></a>"
+                </h2>
+                <p>************************************************** </p>
+                <h4><span th:text="${line.type}"></span></h4>
+                <img th:src="@{${line.img}}" width="800" >
+            </td>
+            <td>
+            <span>
+                <h4 style="text-align:left">
+                    <a th:href="@{'/delete?id='+${line.id}}">Удалить просмотренный</a>
+                </h4>
+            </span>
+            </td>
+        </tr>
+    </table>
+</form>
+<br>
+<br>
+<h4 style="text-align:center"> <a href="/allFilms"> На главную </a></h4>
 </body>
 </html>

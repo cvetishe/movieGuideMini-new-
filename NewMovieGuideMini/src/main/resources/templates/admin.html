@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ</title>
+</head>
+<body>
+<table border ="1" style="width:400px">
+    <tr>
+         <td> Запрашиваемые фильмы: </td>
+    </tr>
+    <tr th:each="line : ${tab_movies}">
+        <td><span th:text="${line.nameMovie}"></span> </td>
+    </tr>
+</table>
+<br>
+<br>
+<form action="/save"><button>Сохранить</button></form>
+<p><span th:text="${message}"></span></p>
+</body>
+</html>
