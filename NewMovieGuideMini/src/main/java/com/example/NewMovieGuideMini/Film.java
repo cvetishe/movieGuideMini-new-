@@ -1,11 +1,21 @@
 package com.example.NewMovieGuideMini;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+
 public class Film {
     String name;
     String type;
     String img;
     String description;
+    @Id
     int id;
+
+    public Film(){
+
+    }
 
     public Film(String name, String type, String img,
                 String description, int id) {
